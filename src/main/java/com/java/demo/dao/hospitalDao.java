@@ -4,6 +4,9 @@ import com.java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.java.exception.*;
 
 public class hospitalDao {
@@ -91,7 +94,7 @@ public class hospitalDao {
 			
 		}
 	}
-		public void getForPatient(int patientID) throws PatientNumberNotFoundException {
+		public List<Appointment> getForPatient(int patientID) throws PatientNumberNotFoundException {
 			try
 			{
 			
@@ -99,50 +102,58 @@ public class hospitalDao {
 			stat.setInt(1,patientID);
 	        ResultSet rs = stat.executeQuery();
 	        boolean found=false;
+	        List<Appointment>appointments = new ArrayList();
 	        
 	        while(rs.next())
 	        {
+	        	Appointment appointment = new Appointment();
+	        	appointment.setAppointment_id(rs.getInt(1));
+	        	appointment.setPatient_id(rs.getInt(2));
+	        	appointment.setDoctor_id(rs.getInt(3));
+	        	appointment.setAppointmentDate(rs.getString(4));
+	        	appointment.setDescription(rs.getString(5));
+	        	appointments.add(appointment);
 	        	found=true;
-	        	System.out.println("Appointment ID : "+rs.getInt(1));
-	        	System.out.println("Patient ID : "+rs.getInt(2));
-	        	System.out.println("Doctor ID : "+rs.getInt(3));
-	        	System.out.println("Apoointment Date : "+rs.getString(4));
-	        	System.out.println("Description : "+rs.getString(5));
-	        	System.out.println("\n");
 	        }
 	        if(found==false) {
 	        	throw new PatientNumberNotFoundException("appointment not found");
 	        }
+	        return appointments;
 			}
 			catch(Exception e)
 			{
 				System.out.println(e);
 				
 			}
+			return null;
 	}
 		
-		public void getForDoctor(int DoctorID) {
+		public List<Appointment> getForDoctor(int DoctorID) {
 			try
 			{
 			
 			stat=con.prepareStatement("select * from appointment where doctor_id=? ");
 			stat.setInt(1,DoctorID);
 	        ResultSet rs = stat.executeQuery();
+	        List<Appointment>appointments = new ArrayList();
 	        
 	        while(rs.next())
 	        {
-	        	System.out.println("Appointment ID : "+rs.getInt(1));
-	        	System.out.println("Patient ID : "+rs.getInt(2));
-	        	System.out.println("Doctor ID : "+rs.getInt(3));
-	        	System.out.println("Apoointment Date : "+rs.getString(4));
-	        	System.out.println("Description : "+rs.getString(5));
-	        	System.out.println("\n");
+	        	Appointment appointment = new Appointment();
+	        	appointment.setAppointment_id(rs.getInt(1));
+	        	appointment.setPatient_id(rs.getInt(2));
+	        	appointment.setDoctor_id(rs.getInt(3));
+	        	appointment.setAppointmentDate(rs.getString(4));
+	        	appointment.setDescription(rs.getString(5));
+	        	appointments.add(appointment);
 	        }
+	        return appointments;
 			}
 			catch(Exception e)
 			{
 				System.out.println(e);
 				
 			}
+			return null;
 	}
 }

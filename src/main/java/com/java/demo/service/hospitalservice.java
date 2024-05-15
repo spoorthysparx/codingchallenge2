@@ -2,6 +2,7 @@ package com.java.demo.service;
 import com.java.demo.dao.*;
 import com.java.exception.PatientNumberNotFoundException;
 
+import java.util.List;
 import java.util.Scanner;
 import com.java.model.*;
 
@@ -28,14 +29,22 @@ public class hospitalservice {
 		 int patientID;
 		 System.out.println("enter patient id");
 		 patientID=sc.nextInt();
-		 hdao.getForPatient(patientID);
+		 List<Appointment> appointments =  hdao.getForPatient(patientID);
+		 
+		 for(Appointment appointment : appointments) {
+			 System.out.println(appointment.toString());
+		 }
+		 
 	 }
 	 
 	 public void getAppointmentForDoctor() {
 		 int DoctorID;
 		 System.out.println("enter doctor id");
 		 DoctorID=sc.nextInt();
-		 hdao.getForDoctor(DoctorID);
+		 List<Appointment> appointments =  hdao.getForDoctor(DoctorID);
+		 for(Appointment appointment:appointments) {
+			 System.out.println(appointment.toString());
+		 }
 	 }
 	 
 	 public void scheduleAppointment() {
