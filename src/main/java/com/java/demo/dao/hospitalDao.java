@@ -98,21 +98,16 @@ public class hospitalDao {
 			try
 			{
 			
-			stat=con.prepareStatement("select * from appointment where patient_id=? ");
+			stat=con.prepareStatement("select product_id from cart where customer_id=? "); 
 			stat.setInt(1,patientID);
-	        ResultSet rs = stat.executeQuery();
+	        ResultSet rs = stat.executeQuery();//list of product_id
 	        boolean found=false;
-	        List<Appointment>appointments = new ArrayList();
+	        List<Integer> product_ids = new ArrayList();
 	        
 	        while(rs.next())
 	        {
-	        	Appointment appointment = new Appointment();
-	        	appointment.setAppointment_id(rs.getInt(1));
-	        	appointment.setPatient_id(rs.getInt(2));
-	        	appointment.setDoctor_id(rs.getInt(3));
-	        	appointment.setAppointmentDate(rs.getString(4));
-	        	appointment.setDescription(rs.getString(5));
-	        	appointments.add(appointment);
+	        	
+	        	product_ids.add(rs.getInt(1));
 	        	found=true;
 	        }
 	        if(found==false) {

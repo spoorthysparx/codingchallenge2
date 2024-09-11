@@ -49,7 +49,6 @@ public class hospitalservice {
 	 
 	 public void scheduleAppointment() {
 		 Appointment a = new Appointment();
-			
 		 System.out.println("enter appointment id");
 		 a.setAppointment_id(sc.nextInt());
 		 System.out.println("enter patient id");
@@ -62,6 +61,7 @@ public class hospitalservice {
 		 sc.nextLine();
 		 System.out.println("enter desciption");
 		 a.setDescription(sc.nextLine());
+		 
 		 hdao.add(a);
 	 }
 	 
